@@ -1,0 +1,99 @@
+'use strict';
+
+import React, { Component } from 'react';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TextInput,
+  TouchableHighlight,
+  ActivityIndicator } from 'react-native';
+import SmartLogin from './smart-login';
+
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Image style={styles.logo}
+          source={require('../img/Octocat.png')} />
+        <Text style={styles.heading}>
+          GitHub Browser
+        </Text>
+        <TextInput
+          onChangeText={text => {this.props.setUsername(text)}}
+          style={styles.input}
+          placeholder="GitHub Username" />
+        <TextInput style={styles.input}
+          onChangeText={text => this.props.setPassword(text)}
+          placeholder="GitHub Password"
+          secureTextEntry={true} />
+        <TouchableHighlight
+          style={styles.button}
+          onPress={this.props.onLoginPressed}>
+          <Text
+            style={styles.buttonText}>
+            Log In
+          </Text>
+        </TouchableHighlight>
+        <ActivityIndicator
+          animating={this.props.showProgress()}
+          size="large"
+          style={styles.loader} />
+      </View>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#F5FCFF',
+    flex: 1,
+    paddingTop: 40,
+    alignItems: 'center',
+    padding: 10
+  },
+  logo: {
+    width: 66,
+    height: 55
+  },
+  heading: {
+    fontSize: 30,
+    marginTop: 10
+  },
+  input: {
+    height: 50,
+    alignSelf: 'stretch',
+    marginTop: 10,
+    padding: 4,
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: '#48bbec'
+  },
+  button: {
+    height: 50,
+    backgroundColor: '#48BBEC',
+    alignSelf: 'stretch',
+    marginTop: 10,
+    justifyContent: 'center'
+  },
+  button: {
+    height: 50,
+    backgroundColor: '#48BBEC',
+    alignSelf: 'stretch',
+    marginTop: 10,
+    justifyContent: 'center'
+  },
+  buttonText: {
+    fontSize: 22,
+    color: '#fff',
+    alignSelf: 'center'
+  },
+  loader: {
+    marginTop: 20
+  }
+});

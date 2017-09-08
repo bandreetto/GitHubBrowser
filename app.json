@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "github-browser",
+    "description": "GitHub Browser App",
+    "slug": "github-browser",
+    "privacy": "public",
+    "sdkVersion": "20.0.0",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./img/Octocat.png",
+    "loading": {
+      "icon": "./img/Octocat.png",
+      "hideExponentText": false
+    },
+    "packagerOpts": {
+      "assetExts": ["ttf", "mp4"]
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
