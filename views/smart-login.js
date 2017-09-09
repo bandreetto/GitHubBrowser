@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
   StyleSheet } from 'react-native';
 import Login from './login.js';
-import { LoginUseCase } from '../domain/login.use-case.js';
+import LoginUseCase from '../domain/login.use-case.js';
 
 export default class SmartLogin extends Component {
   constructor(props) {
@@ -17,9 +17,13 @@ export default class SmartLogin extends Component {
     }
   }
 
-  loginHandler() {
+  async loginHandler() {
     console.log('Attempting to log with username ' + this.state.username);
     this.setState({fetching: true});
+
+    var results = await LoginUseCase.doLogin();
+    console.log(results);
+    this.setState({fetching: false});
   }
 
   setUsername(username) {
