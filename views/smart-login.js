@@ -18,7 +18,7 @@ export default class SmartLogin extends Component {
   }
 
   async loginHandler() {
-    console.log('Attempting to log with username ' + this.state.username);
+    console.log('Attempting to log in with username ' + this.state.username);
     this.setState({fetching: true});
 
     var newLogin = new LoginAuth(this.state.username,
@@ -33,8 +33,15 @@ export default class SmartLogin extends Component {
         this.setState(error);
         this.setState({success: false});
       })
-      .finally(() => this.setState({fetching: false}));
+      .finally(results => {
+          this.setState({fetching: false});
+          return results;
+        });
     console.log(results);
+
+    if (this.state.success && this.props.onLogin) {
+      this.props.onLogin();
+    }
   }
 
   setUsername(username) {

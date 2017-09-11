@@ -12,10 +12,6 @@ import {
 import SmartLogin from './smart-login';
 
 export default class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     var errorCtrl = <View />;
 
