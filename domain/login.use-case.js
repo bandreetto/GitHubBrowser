@@ -12,9 +12,9 @@ export default class LoginAuth {
   }
 
   execute() {
-    var buff = new buffer.Buffer(this.state.username +
+    const buff = new buffer.Buffer(this.state.username +
       ':' + this.state.password);
-    var encodedAuth = buff.toString('base64');
+    const encodedAuth = buff.toString('base64');
 
     return fetch('https://api.github.com/user', {
         headers: {
@@ -27,8 +27,8 @@ export default class LoginAuth {
         }
 
         throw {
-          badCredentials: response.status == 401,
-          unknownError: response.status != 401
+          badCredentials: response.status === 401,
+          unknownError: response.status !== 401
         }
       })
       .then(response => {

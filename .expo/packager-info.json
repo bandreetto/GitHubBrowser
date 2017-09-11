@@ -1,8 +1,8 @@
 {
-  "expoServerPort": 19000,
-  "packagerPort": 19002,
-  "packagerPid": 14695,
-  "expoServerNgrokUrl": "https://wu-zus.bandreetto.githubbrowser.exp.direct",
-  "packagerNgrokUrl": "https://packager.wu-zus.bandreetto.githubbrowser.exp.direct",
-  "ngrokPid": 14710
+  "expoServerPort": 19002,
+  "packagerPort": 19004,
+  "packagerPid": 48394,
+  "expoServerNgrokUrl": "https://u2-746.bandreetto.githubbrowser.exp.direct",
+  "packagerNgrokUrl": "https://packager.u2-746.bandreetto.githubbrowser.exp.direct",
+  "ngrokPid": 48408
 }

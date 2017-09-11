@@ -35,13 +35,13 @@ export default new class Toolbox {
         return callback();
       }
 
-      var zippedAuth = _.fromPairs(savedAuth);
+      const zippedAuth = _.fromPairs(savedAuth);
 
       if (!zippedAuth['auth']) {
         return callback();
       }
 
-      var authInfo = {
+      const authInfo = {
         auth: zippedAuth['auth'],
         user: JSON.parse(zippedAuth['user'])
       }
