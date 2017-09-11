@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-import buffer from 'buffer';
-import Toolbox from '../toolbox';
+import buffer from 'buffer'
+import Toolbox from '../toolbox'
 
 export default class LoginAuth {
   constructor(username, password) {

@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   Text,
   StyleSheet,
@@ -8,8 +8,8 @@ import {
   Image,
   TextInput,
   TouchableHighlight,
-  ActivityIndicator } from 'react-native';
-import SmartLogin from './smart-login';
+  ActivityIndicator } from 'react-native'
+import SmartLogin from './smart-login'
 
 export default class Login extends Component {
   render() {
@@ -18,13 +18,13 @@ export default class Login extends Component {
     if (!this.props.successfulLogin() && this.props.badCredentials()) {
       errorCtrl = (<Text style={styles.error}>
         Username or password incorrect
-      </Text>);
+      </Text>)
     }
 
     if (!this.props.successfulLogin() && this.props.unknownError()) {
       errorCtrl = (<Text style={styles.error}>
         An unexpected error occoured trying to log you in
-      </Text>);
+      </Text>)
     }
 
     return (
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
     color: 'red',
     paddingTop: 10
   }
-});
+})

@@ -1,11 +1,12 @@
-'use strict';
+'use strict'
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   Text,
   View,
   StyleSheet,
-  TabBarIOS } from 'react-native';
+  TabBarIOS } from 'react-native'
+import SmartFeed from './feed/smart-feed'
 
 export default class MainView extends Component {
   componentWillMount() {
@@ -23,7 +24,7 @@ export default class MainView extends Component {
           icon={require('../img/inbox.png')}
           onPress={() => this.setState({selectedTab: 'feed'})}
           style={styles.container}>
-          <Text style={styles.welcome}>Tab 1</Text>
+          <SmartFeed />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Search"
@@ -34,7 +35,7 @@ export default class MainView extends Component {
           <Text style={styles.welcome}>Tab 2</Text>
         </TabBarIOS.Item>
       </TabBarIOS>
-    );
+    )
   }
 }
 
