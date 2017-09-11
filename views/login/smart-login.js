@@ -6,14 +6,14 @@ import {
   TouchableHighlight,
   StyleSheet } from 'react-native';
 import Login from './login.js';
-import LoginAuth from '../domain/login.use-case.js';
+import LoginAuth from '../../domain/login.use-case.js';
 
 export default class SmartLogin extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fetching: false,
+      fetching: false
     }
   }
 

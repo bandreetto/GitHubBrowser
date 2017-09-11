@@ -14,7 +14,8 @@ import {
   ActivityIndicator
 } from 'react-native';
 import Toolbox from './toolbox'
-import SmartLogin from './views/smart-login';
+import SmartLogin from './views/login/smart-login';
+import MainView from './views/main-view';
 
 export default class GitHubBrowser extends Component {
   componentWillMount() {
@@ -51,13 +52,7 @@ export default class GitHubBrowser extends Component {
     }
 
     if (this.state.isLoggedIn) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome
-          </Text>
-        </View>
-      )
+      return <MainView />
     } else {
       return <SmartLogin onLogin={this.onLogin.bind(this)} />
     }
