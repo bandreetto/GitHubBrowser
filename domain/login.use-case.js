@@ -1,6 +1,7 @@
 'use strict';
 
 import buffer from 'buffer';
+import Toolbox from '../toolbox';
 
 export default class LoginAuth {
   constructor(username, password) {
@@ -33,10 +34,15 @@ export default class LoginAuth {
       .then(response => {
         return response.json();
       })
-      .catch(error => {
-        console.warn('Login failed: ' + (error.badCredentials ? 'Bad credentials'
+      .then(results => {
+        Toolbox.saveAuth(encodedAuth, results);
+        return results;
+      })
+      .catch(err => {
+        console.warn('Login failed: ' + (err.badCredentials ? 'Bad credentials'
                                                               : 'Uknown error'));
-        throw error;
+
+        throw err;
       });
   }
 }

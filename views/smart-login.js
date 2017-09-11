@@ -29,9 +29,13 @@ export default class SmartLogin extends Component {
         this.setState({success: true});
         return results;
       })
-      .catch(error => {
-        this.setState(error);
-        this.setState({success: false});
+      .catch(err => {
+        if (err.badCredentials || err.unknownError) {
+          this.setState(err);
+          this.setState({success: false});
+        }
+
+        throw err;
       })
       .finally(results => {
           this.setState({fetching: false});

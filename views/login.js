@@ -16,15 +16,15 @@ export default class Login extends Component {
     var errorCtrl = <View />;
 
     if (!this.props.successfulLogin() && this.props.badCredentials()) {
-      errorCtrl = <Text style={styles.error}>
+      errorCtrl = (<Text style={styles.error}>
         Username or password incorrect
-      </Text>
+      </Text>);
     }
 
     if (!this.props.successfulLogin() && this.props.unknownError()) {
-      errorCtrl = <Text style={styles.error}>
+      errorCtrl = (<Text style={styles.error}>
         An unexpected error occoured trying to log you in
-      </Text>
+      </Text>);
     }
 
     return (

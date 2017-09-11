@@ -10,14 +10,27 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  ActivityIndicator
 } from 'react-native';
-
+import Toolbox from './toolbox'
 import SmartLogin from './views/smart-login';
 
 export default class GitHubBrowser extends Component {
   componentWillMount() {
-    this.setState({isLoggedIn: false});
+    this.state = {
+      isLoggedIn: false,
+      checkingAuth: true
+    }
+  }
+
+  componentDidMount() {
+    Toolbox.getAuth((err, authInfo) => {
+      this.setState({
+        isLoggedIn: authInfo != null,
+        checkingAuth: false
+      })
+    })
   }
 
   onLogin() {
@@ -26,6 +39,17 @@ export default class GitHubBrowser extends Component {
   }
 
   render() {
+    if (this.state.checkingAuth) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator
+            animating={true}
+            size='large'
+            style={styles.loader} />
+        </View>
+      )
+    }
+
     if (this.state.isLoggedIn) {
       return (
         <View style={styles.container}>
