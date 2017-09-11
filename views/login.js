@@ -17,6 +17,20 @@ export default class Login extends Component {
   }
 
   render() {
+    var errorCtrl = <View />;
+
+    if (!this.props.successfulLogin() && this.props.badCredentials()) {
+      errorCtrl = <Text style={styles.error}>
+        Username or password incorrect
+      </Text>
+    }
+
+    if (!this.props.successfulLogin() && this.props.unknownError()) {
+      errorCtrl = <Text style={styles.error}>
+        An unexpected error occoured trying to log you in
+      </Text>
+    }
+
     return (
       <View style={styles.container}>
         <Image style={styles.logo}
@@ -40,6 +54,8 @@ export default class Login extends Component {
             Log In
           </Text>
         </TouchableHighlight>
+
+        {errorCtrl}
         <ActivityIndicator
           animating={this.props.showProgress()}
           size="large"
@@ -95,5 +111,9 @@ const styles = StyleSheet.create({
   },
   loader: {
     marginTop: 20
+  },
+  error: {
+    color: 'red',
+    paddingTop: 10
   }
 });

@@ -13,7 +13,7 @@ export default class SmartLogin extends Component {
     super(props);
 
     this.state = {
-      fetching: false
+      fetching: false,
     }
   }
 
@@ -25,7 +25,14 @@ export default class SmartLogin extends Component {
       this.state.password);
 
     var results = await newLogin.execute()
-      .catch(error => this.setState(error))
+      .then(results => {
+        this.setState({success: true});
+        return results;
+      })
+      .catch(error => {
+        this.setState(error);
+        this.setState({success: false});
+      })
       .finally(() => this.setState({fetching: false}));
     console.log(results);
   }
@@ -42,12 +49,27 @@ export default class SmartLogin extends Component {
     return this.state.fetching;
   }
 
+  successfulLogin() {
+    return this.state.success;
+  }
+
+  badCredentialsError() {
+    return this.state.badCredentials;
+  }
+
+  unknownError() {
+    return this.state.unknownError;
+  }
+
   render() {
     return (
       <Login
         onLoginPressed={this.loginHandler.bind(this)}
         showProgress={this.showProgress.bind(this)}
         setUsername={this.setUsername.bind(this)}
-        setPassword={this.setPassword.bind(this)} />)
+        setPassword={this.setPassword.bind(this)}
+        badCredentials={this.badCredentialsError.bind(this)}
+        unknownError={this.unknownError.bind(this)}
+        successfulLogin={this.successfulLogin.bind(this)} />)
   }
 }

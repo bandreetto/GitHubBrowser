@@ -34,8 +34,9 @@ export default class LoginAuth {
         return response.json();
       })
       .catch(error => {
-        console.warn('Login failed: ' + (error.badCredentials ? 'Bad credentials' 
+        console.warn('Login failed: ' + (error.badCredentials ? 'Bad credentials'
                                                               : 'Uknown error'));
+        throw error;
       });
   }
 }
