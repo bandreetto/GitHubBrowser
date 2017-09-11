@@ -5,17 +5,36 @@ import {
   Text,
   View,
   StyleSheet,
-  TabBar } from 'react-native';
+  TabBarIOS } from 'react-native';
 
 export default class MainView extends Component {
+  componentWillMount() {
+    this.setState({
+      selectedTab: 'feed'
+    })
+  }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome!
-        </Text>
-      </View>)
+      <TabBarIOS>
+        <TabBarIOS.Item
+          title="Feed"
+          selected={this.state.selectedTab == 'feed'}
+          icon={require('../img/inbox.png')}
+          onPress={() => this.setState({selectedTab: 'feed'})}
+          style={styles.container}>
+          <Text style={styles.welcome}>Tab 1</Text>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          title="Search"
+          selected={this.state.selectedTab == 'search'}
+          icon={require('../img/search.png')}
+          onPress={() => this.setState({selectedTab: 'search'})}
+          style={styles.container}>
+          <Text style={styles.welcome}>Tab 2</Text>
+        </TabBarIOS.Item>
+      </TabBarIOS>
+    );
   }
 }
 
