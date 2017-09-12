@@ -1,39 +1,36 @@
 'use strict';
 
 import React, {Component} from 'react'
-import {
-    Text,
-    View,
-    ListView,
-    StyleSheet,
-    ActivityIndicator,
-    Image
-} from 'react-native'
+import {ActivityIndicator, Image, ListView, StyleSheet, Text, TouchableHighlight, View} from 'react-native'
 import moment from 'moment'
 
 export default class Feed extends Component {
     renderRow(rowData) {
         return (
-            <View style={styles.row}>
-                <Image
-                    source={{uri: rowData.actor.avatar_url}}
-                    style={styles.avatar} />
+            <TouchableHighlight
+                onPress={() => this.props.rowPressEvent(rowData)}
+                underlayColor='#ddd' >
+                <View style={styles.row}>
+                    <Image
+                        source={{uri: rowData.actor.avatar_url}}
+                        style={styles.avatar}/>
 
-                <View style={styles.textContainer}>
-                    <Text style={styles.text}>
-                        {moment(rowData.created_at).fromNow()}
-                    </Text>
-                    <Text style={styles.text}>
-                        <Text style={styles.boldText}>{rowData.actor.login}</Text> pushed to
-                    </Text>
-                    <Text style={styles.text}>
-                        {rowData.payload.ref.replace('refs/heads/', '')}
-                    </Text>
-                    <Text style={styles.text}>
-                        at <Text style={styles.boldText}>{rowData.repo.name}</Text>
-                    </Text>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>
+                            {moment(rowData.created_at).fromNow()}
+                        </Text>
+                        <Text style={styles.text}>
+                            <Text style={styles.boldText}>{rowData.actor.login}</Text> pushed to
+                        </Text>
+                        <Text style={styles.text}>
+                            {rowData.payload.ref.replace('refs/heads/', '')}
+                        </Text>
+                        <Text style={styles.text}>
+                            at <Text style={styles.boldText}>{rowData.repo.name}</Text>
+                        </Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableHighlight>
         )
     }
 
@@ -43,7 +40,7 @@ export default class Feed extends Component {
                 <View style={styles.loader}>
                     <ActivityIndicator
                         size="large"
-                        animating={true} />
+                        animating={true}/>
                 </View>
             )
         }
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
     avatar: {
         height: 36,
         width: 36,
-        borderRadius:18
+        borderRadius: 18
     },
     textContainer: {
         paddingLeft: 20
@@ -90,4 +87,4 @@ const styles = StyleSheet.create({
     boldText: {
         fontWeight: 'bold'
     }
-});
+})

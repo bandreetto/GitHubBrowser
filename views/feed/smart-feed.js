@@ -43,10 +43,15 @@ export default class SmartFeed extends Component {
         return this.state.showProgress
     }
 
+    rowPressHandler(rowData) {
+        console.log(rowData)
+    }
+
     render() {
         return (
             <Feed
                 dataSource={this.listDataSource.bind(this)}
-                isLoading={this.isLoading.bind(this)} />)
+                isLoading={this.isLoading.bind(this)}
+                rowPressEvent={this.rowPressHandler.bind(this)}/>)
     }
 }
