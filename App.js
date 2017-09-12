@@ -9,7 +9,6 @@ import React, { Component } from 'react'
 import {
   AppRegistry,
   StyleSheet,
-  Text,
   View,
   ActivityIndicator
 } from 'react-native'
@@ -28,7 +27,7 @@ export default class GitHubBrowser extends Component {
   componentDidMount() {
     Toolbox.getAuth((err, authInfo) => {
       this.setState({
-        isLoggedIn: authInfo != null,
+        isLoggedIn: authInfo !== null,
         checkingAuth: false
       })
     })
@@ -36,6 +35,7 @@ export default class GitHubBrowser extends Component {
 
   onLogin() {
     this.setState({isLoggedIn: true})
+
     console.log("Successful Login! Moving to next view.")
   }
 
@@ -72,3 +72,4 @@ const styles = StyleSheet.create({
 })
 
 AppRegistry.registerComponent('GitHubBrowser', () => GitHubBrowser)
+

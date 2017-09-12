@@ -1,28 +1,52 @@
 'use strict';
 
-import React, { Component } from 'react'
-import { ListView } from 'react-native'
+import React, {Component} from 'react'
+import {ListView} from 'react-native'
 import Feed from './feed'
-// import FetchFeed from '../../domain/fetch-feed.usecase.js'
+import FetchFeed from '../../domain/fetch-feed.usecase.js'
 
 export default class SmartFeed extends Component {
-  componentWillMount() {
-    var dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 != r2
-    });
+    componentWillMount() {
+        const dataSource = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
 
-    this.setState({
-      dataSource: dataSource.cloneWithRows(['A', 'B', 'C'])
-    })
-  }
+        const fetchCommand = new FetchFeed()
 
-  listDataSource() {
-    return this.state.dataSource
-  }
+        this.setState({
+            fetchFeed: fetchCommand,
+            dataSource: dataSource,
+            showProgress: true
+        })
+    }
 
-  render() {
-    return (
-      <Feed
-        dataSource={this.listDataSource.bind(this)} />)
-  }
+    componentDidMount() {
+        this.state.fetchFeed.execute().then(data => this.bindFeed(data))
+    }
+
+    bindFeed(responseData) {
+        const feedItems = responseData.filter(evnt => evnt.type === 'PushEvent')
+
+        console.log(feedItems)
+
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(feedItems),
+            showProgress: false
+        })
+    }
+
+    listDataSource() {
+        return this.state.dataSource
+    }
+
+    isLoading() {
+        return this.state.showProgress
+    }
+
+    render() {
+        return (
+            <Feed
+                dataSource={this.listDataSource.bind(this)}
+                isLoading={this.isLoading.bind(this)} />)
+    }
 }
