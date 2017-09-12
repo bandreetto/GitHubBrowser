@@ -4,17 +4,17 @@
  * @flow
  */
 
-import 'expo';
-import React, { Component } from 'react';
+import 'expo'
+import React, { Component } from 'react'
 import {
   AppRegistry,
   StyleSheet,
-  Text,
   View,
   ActivityIndicator
-} from 'react-native';
+} from 'react-native'
 import Toolbox from './toolbox'
-import SmartLogin from './views/smart-login';
+import SmartLogin from './views/login/smart-login'
+import MainView from './views/main-view'
 
 export default class GitHubBrowser extends Component {
   componentWillMount() {
@@ -27,15 +27,16 @@ export default class GitHubBrowser extends Component {
   componentDidMount() {
     Toolbox.getAuth((err, authInfo) => {
       this.setState({
-        isLoggedIn: authInfo != null,
+        isLoggedIn: authInfo !== null,
         checkingAuth: false
       })
     })
   }
 
   onLogin() {
-    this.setState({isLoggedIn: true});
-    console.log("Successful Login! Moving to next view.");
+    this.setState({isLoggedIn: true})
+
+    console.log("Successful Login! Moving to next view.")
   }
 
   render() {
@@ -51,13 +52,7 @@ export default class GitHubBrowser extends Component {
     }
 
     if (this.state.isLoggedIn) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome
-          </Text>
-        </View>
-      )
+      return <MainView />
     } else {
       return <SmartLogin onLogin={this.onLogin.bind(this)} />
     }
@@ -74,6 +69,7 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 20
   }
-});
+})
 
-AppRegistry.registerComponent('GitHubBrowser', () => GitHubBrowser);
+AppRegistry.registerComponent('GitHubBrowser', () => GitHubBrowser)
+
