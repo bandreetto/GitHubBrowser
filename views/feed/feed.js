@@ -30,7 +30,7 @@ export default class Feed extends Component {
                         <Text style={styles.text}>
                             <Text style={styles.boldText}>{rowData.actor.login}</Text> pushed to
                         </Text>
-                        <Text style={styles.text}>
+                        <Text style={styles.boldText}>
                             {rowData.payload.ref.replace('refs/heads/', '')}
                         </Text>
                         <Text style={styles.text}>
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 20,
         alignItems: 'center',
+        backgroundColor: "#FFF",
         borderColor: '#d7d7d7',
         borderBottomWidth: 1
     },
@@ -82,15 +83,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     avatar: {
-        height: 36,
-        width: 36,
-        borderRadius: 18
+        height: 40,
+        width: 40,
+        borderRadius: 20
     },
     textContainer: {
         paddingLeft: 20
     },
     text: {
-        backgroundColor: '#fff'
+        backgroundColor: '#FFF'
     },
     boldText: {
         fontWeight: 'bold'

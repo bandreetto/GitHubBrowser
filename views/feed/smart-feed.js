@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react'
-import {ListView} from 'react-native'
+import {FlatList, ListView} from 'react-native'
 import Feed from './feed'
 import FetchFeed from '../../domain/fetch-feed.usecase.js'
 import Details from "./feed-details";
