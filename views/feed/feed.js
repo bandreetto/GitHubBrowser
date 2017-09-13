@@ -1,7 +1,15 @@
 'use strict';
 
 import React, {Component} from 'react'
-import {ActivityIndicator, Image, ListView, StyleSheet, Text, TouchableHighlight, View} from 'react-native'
+import {
+    ActivityIndicator,
+    Image,
+    ListView,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    View
+} from 'react-native'
 import moment from 'moment'
 
 export default class Feed extends Component {
@@ -59,7 +67,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        paddingTop: 20
+        paddingTop: 60
     },
     row: {
         flex: 1,

@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import {ListView} from 'react-native'
 import Feed from './feed'
 import FetchFeed from '../../domain/fetch-feed.usecase.js'
+import Details from "./feed-details";
 
 export default class SmartFeed extends Component {
     componentWillMount() {
@@ -44,7 +45,13 @@ export default class SmartFeed extends Component {
     }
 
     rowPressHandler(rowData) {
-        console.log(rowData)
+        this.props.navigator.push({
+            title: 'Push Event',
+            component: Details,
+            passProps: {
+                pushEvent: rowData
+            }
+        })
     }
 
     render() {
