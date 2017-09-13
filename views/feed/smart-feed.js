@@ -1,21 +1,17 @@
 'use strict';
 
 import React, {Component} from 'react'
-import {ListView} from 'react-native'
+import {FlatList, ListView} from 'react-native'
 import Feed from './feed'
 import FetchFeed from '../../domain/fetch-feed.usecase.js'
+import Details from "./feed-details";
 
 export default class SmartFeed extends Component {
     componentWillMount() {
-        const dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-
         const fetchCommand = new FetchFeed()
 
         this.setState({
             fetchFeed: fetchCommand,
-            dataSource: dataSource,
             showProgress: true
         })
     }
@@ -30,7 +26,7 @@ export default class SmartFeed extends Component {
         console.log(feedItems)
 
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(feedItems),
+            dataSource: feedItems,
             showProgress: false
         })
     }
@@ -43,10 +39,21 @@ export default class SmartFeed extends Component {
         return this.state.showProgress
     }
 
+    rowPressHandler(rowData) {
+        this.props.navigator.push({
+            title: 'Push Event',
+            component: Details,
+            passProps: {
+                pushEvent: rowData
+            }
+        })
+    }
+
     render() {
         return (
             <Feed
                 dataSource={this.listDataSource.bind(this)}
-                isLoading={this.isLoading.bind(this)} />)
+                isLoading={this.isLoading.bind(this)}
+                rowPressEvent={this.rowPressHandler.bind(this)}/>)
     }
 }
