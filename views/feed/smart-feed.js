@@ -8,15 +8,10 @@ import Details from "./feed-details";
 
 export default class SmartFeed extends Component {
     componentWillMount() {
-        const dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-
         const fetchCommand = new FetchFeed()
 
         this.setState({
             fetchFeed: fetchCommand,
-            dataSource: dataSource,
             showProgress: true
         })
     }
@@ -31,7 +26,7 @@ export default class SmartFeed extends Component {
         console.log(feedItems)
 
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(feedItems),
+            dataSource: feedItems,
             showProgress: false
         })
     }

@@ -1,40 +1,32 @@
 'use strict';
 
 import React, {Component} from 'react'
-import {
-    ActivityIndicator,
-    Image,
-    ListView,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
-    View
-} from 'react-native'
+import {ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native'
 import moment from 'moment'
 
 export default class Feed extends Component {
     renderRow(rowData) {
         return (
             <TouchableHighlight
-                onPress={() => this.props.rowPressEvent(rowData)}
-                underlayColor='#ddd' >
+                onPress={() => this.props.rowPressEvent(rowData.item)}
+                underlayColor='#ddd'>
                 <View style={styles.row}>
                     <Image
-                        source={{uri: rowData.actor.avatar_url}}
+                        source={{uri: rowData.item.actor.avatar_url}}
                         style={styles.avatar}/>
 
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>
-                            {moment(rowData.created_at).fromNow()}
+                            {moment(rowData.item.created_at).fromNow()}
                         </Text>
                         <Text style={styles.text}>
-                            <Text style={styles.boldText}>{rowData.actor.login}</Text> pushed to
+                            <Text style={styles.boldText}>{rowData.item.actor.login}</Text> pushed to
                         </Text>
                         <Text style={styles.boldText}>
-                            {rowData.payload.ref.replace('refs/heads/', '')}
+                            {rowData.item.payload.ref.replace('refs/heads/', '')}
                         </Text>
                         <Text style={styles.text}>
-                            at <Text style={styles.boldText}>{rowData.repo.name}</Text>
+                            at <Text style={styles.boldText}>{rowData.item.repo.name}</Text>
                         </Text>
                     </View>
                 </View>
@@ -55,9 +47,10 @@ export default class Feed extends Component {
 
         return (
             <View style={styles.container}>
-                <ListView
-                    dataSource={this.props.dataSource()}
-                    renderRow={this.renderRow.bind(this)}/>
+                <FlatList
+                    data={this.props.dataSource()}
+                    renderItem={this.renderRow.bind(this)}
+                    keyExtractor={item => item.id}/>
             </View>
         )
     }
