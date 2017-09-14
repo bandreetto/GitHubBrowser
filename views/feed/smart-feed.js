@@ -16,11 +16,14 @@ export default class SmartFeed extends Component {
     }
 
     componentDidMount() {
-        this.state.fetchFeed.execute().then(data => this.bindFeed(data))
+        this.bindFeed()
+            .catch(err => console.warn(err))
     }
 
-    bindFeed(responseData) {
-        const feedItems = responseData.filter(evnt => evnt.type === 'PushEvent')
+    async bindFeed() {
+        let feedItems = await this.state.fetchFeed.execute()
+
+        feedItems = feedItems.filter(evnt => evnt.type === 'PushEvent')
 
         console.log(feedItems)
 

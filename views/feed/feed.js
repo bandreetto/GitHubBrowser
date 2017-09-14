@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        paddingTop: 60
+        marginTop: 60,
+        marginBottom: 45
     },
     row: {
         flex: 1,

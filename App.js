@@ -20,11 +20,16 @@ export default class GitHubBrowser extends Component {
     }
 
     componentDidMount() {
-        Toolbox.getAuth((err, authInfo) => {
-            this.setState({
-                isLoggedIn: authInfo != null,
-                checkingAuth: false
-            })
+        this.checkAuth()
+            .catch(err => console.warn(err))
+    }
+
+    async checkAuth() {
+        const authInfo = await Toolbox.getAuth()
+
+        this.setState({
+            isLoggedIn: authInfo !== null,
+            checkingAuth: false
         })
     }
 

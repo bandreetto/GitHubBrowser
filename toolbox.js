@@ -1,52 +1,49 @@
-'use strict';
+'use strict'
 
-import { AsyncStorage } from 'react-native';
-import _ from 'lodash';
+import {AsyncStorage} from 'react-native'
+import _ from 'lodash'
 
-let instance;
+let instance
 
 export default new class Toolbox {
-  constructor() {
-    if (!instance) {
-      instance = this;
+    constructor() {
+        if (!instance) {
+            instance = this
+        }
+
+        return instance
     }
 
-    return instance;
-  }
+    saveAuth(auth, user) {
+        AsyncStorage.multiSet([
+            ['auth', auth],
+            ['user', JSON.stringify(user)]
+        ], err => {
+            if (err) {
+                throw err
+            }
+        })
+    }
 
-  saveAuth(auth, user) {
-    AsyncStorage.multiSet([
-      ['auth', auth],
-      ['user', JSON.stringify(user)]
-    ], err => {
-      if (err) {
-        throw err
-      }
-    })
-  }
+    getAuth() {
+        return AsyncStorage.multiGet(['auth', 'user'])
+            .then(savedAuth => {
+                if (!savedAuth) {
+                    return null
+                }
 
-  getAuth(callback) {
-    AsyncStorage.multiGet(['auth', 'user'], (err, savedAuth) => {
-      if (err) {
-        return callback(err);
-      }
+                const zippedAuth = _.fromPairs(savedAuth)
 
-      if (!savedAuth) {
-        return callback();
-      }
+                if (!zippedAuth['auth']) {
+                    return null
+                }
 
-      const zippedAuth = _.fromPairs(savedAuth);
+                const authInfo = {
+                    auth: zippedAuth['auth'],
+                    user: JSON.parse(zippedAuth['user'])
+                }
 
-      if (!zippedAuth['auth']) {
-        return callback();
-      }
-
-      const authInfo = {
-        auth: zippedAuth['auth'],
-        user: JSON.parse(zippedAuth['user'])
-      }
-
-      return callback(null, authInfo);
-    })
-  }
+                return authInfo
+            })
+    }
 }
