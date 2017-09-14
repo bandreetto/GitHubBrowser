@@ -1,6 +1,6 @@
 'use strict'
 
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Login from './login.js'
 import LoginAuth from '../../domain/login.use-case.js'
 
@@ -30,14 +30,14 @@ export default class SmartLogin extends Component {
                     this.setState({success: false})
                 }
 
-                throw err;
+                throw err
             })
             .finally(results => {
                 this.setState({fetching: false})
 
                 return results
-            });
-        console.log(results);
+            })
+        console.log(results)
 
         if (this.state.success && this.props.onLogin) {
             this.props.onLogin()

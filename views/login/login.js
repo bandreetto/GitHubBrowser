@@ -1,19 +1,11 @@
 'use strict'
 
 import React, {Component} from 'react'
-import {
-    Text,
-    StyleSheet,
-    View,
-    Image,
-    TextInput,
-    TouchableHighlight,
-    ActivityIndicator
-} from 'react-native'
+import {ActivityIndicator, Image, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native'
 
 export default class Login extends Component {
     render() {
-        let errorCtrl = <View/>;
+        let errorCtrl = <View/>
 
         if (!this.props.successfulLogin() && this.props.badCredentials()) {
             errorCtrl = (<Text style={styles.error}>

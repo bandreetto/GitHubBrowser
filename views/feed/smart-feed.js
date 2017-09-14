@@ -1,10 +1,9 @@
-'use strict';
+'use strict'
 
 import React, {Component} from 'react'
-import {FlatList, ListView} from 'react-native'
 import Feed from './feed'
-import FetchFeed from '../../domain/fetch-feed.usecase.js'
-import Details from "./feed-details";
+import FetchFeed from '../../domain/fetch-feed.use-case.js'
+import Details from "./feed-details"
 
 export default class SmartFeed extends Component {
     componentWillMount() {
