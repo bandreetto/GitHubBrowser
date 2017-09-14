@@ -1,12 +1,9 @@
 'use strict'
 
 import React, {Component} from 'react'
-import {
-    TabBarIOS,
-    Text,
-    NavigatorIOS
-} from 'react-native'
+import {NavigatorIOS, TabBarIOS} from 'react-native'
 import SmartFeed from './feed/smart-feed'
+import SmartSearch from "./search/smart-search";
 
 export default class MainView extends Component {
     componentWillMount() {
@@ -35,7 +32,12 @@ export default class MainView extends Component {
                     selected={this.state.selectedTab === 'search'}
                     icon={require('../img/search.png')}
                     onPress={() => this.setState({selectedTab: 'search'})}>
-                    <Text>Tab 2</Text>
+                    <NavigatorIOS
+                        style={{flex: 1}}
+                        initialRoute={{
+                            component: SmartSearch,
+                            title: 'Search'
+                        }}/>
                 </TabBarIOS.Item>
             </TabBarIOS>
         )

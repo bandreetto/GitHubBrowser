@@ -34,6 +34,13 @@ export default class Feed extends Component {
         )
     }
 
+    renderSeparator() {
+        return (
+            <View
+                style={styles.separator}/>
+        )
+    }
+
     render() {
         if (this.props.isLoading()) {
             return (
@@ -50,7 +57,8 @@ export default class Feed extends Component {
                 <FlatList
                     data={this.props.dataSource()}
                     renderItem={this.renderRow.bind(this)}
-                    keyExtractor={item => item.id}/>
+                    keyExtractor={item => item.id}
+                    ItemSeparatorComponent={this.renderSeparator.bind(this)}/>
             </View>
         )
     }
@@ -67,9 +75,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 20,
         alignItems: 'center',
-        backgroundColor: "#FFF",
-        borderColor: '#d7d7d7',
-        borderBottomWidth: 1
+        backgroundColor: "#FFF"
     },
     loader: {
         flex: 1,
@@ -88,5 +94,9 @@ const styles = StyleSheet.create({
     },
     boldText: {
         fontWeight: 'bold'
-    }
+    },
+    separator: {
+        height: 1,
+        backgroundColor: "#d7d7d7"
+    },
 })
