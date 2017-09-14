@@ -22,7 +22,7 @@ export default class GitHubBrowser extends Component {
     componentDidMount() {
         Toolbox.getAuth((err, authInfo) => {
             this.setState({
-                isLoggedIn: authInfo !== null,
+                isLoggedIn: authInfo != null,
                 checkingAuth: false
             })
         })

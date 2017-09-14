@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {Component} from 'react'
-import {ActivityIndicator, FlatList, StyleSheet, Text, View} from "react-native"
+import {ActivityIndicator, FlatList, Image, StyleSheet, Text, View} from "react-native"
 
 export default class SearchResults extends Component {
     renderItem(rowData) {
@@ -10,6 +10,35 @@ export default class SearchResults extends Component {
                 <Text style={styles.rowText}>
                     {rowData.item.full_name}
                 </Text>
+
+                <View style={styles.repoInfo}>
+                    <View style={styles.repoCell}>
+                        <Image
+                            source={require('../../img/star.png')}
+                            style={styles.repoCellIcon}/>
+                        <Text style={styles.repoCellLabel}>
+                            {rowData.item.stargazers_count}
+                        </Text>
+                    </View>
+
+                    <View style={styles.repoCell}>
+                        <Image
+                            source={require('../../img/fork.png')}
+                            style={styles.repoCellIcon}/>
+                        <Text style={styles.repoCellLabel}>
+                            {rowData.item.forks}
+                        </Text>
+                    </View>
+
+                    <View style={styles.repoCell}>
+                        <Image
+                            source={require('../../img/issues2.png')}
+                            style={styles.repoCellIcon}/>
+                        <Text style={styles.repoCellLabel}>
+                            {rowData.item.open_issues}
+                        </Text>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -61,12 +90,30 @@ const styles = StyleSheet.create({
     },
     row: {
         flex: 1,
-        flexDirection: 'row',
         padding: 20,
         alignItems: 'center',
     },
     rowText: {
+        alignSelf: 'baseline',
         fontSize: 20,
         fontWeight: '600'
+    },
+    repoInfo: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 20
+    },
+    repoCell: {
+        flex: 1,
+        width: 40,
+        alignItems: 'center'
+    },
+    repoCellIcon: {
+        width: 20,
+        height: 20
+    },
+    repoCellLabel: {
+        textAlign: 'center'
     }
 })
