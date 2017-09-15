@@ -71,6 +71,7 @@ export default class Feed extends Component {
                     ItemSeparatorComponent={this.renderSeparator.bind(this)}
                     ListFooterComponent={this.renderFooter.bind(this)}
                     onEndReached={this.props.endReachedEvent()}
+                    onEndReachedThreshold={0}
                 />
             </View>
         )

@@ -5,13 +5,15 @@ import SearchResults from "./search-results"
 import DoSearch from "../../domain/do-search.use-case"
 
 export default class SmartSearchResults extends Component {
-    componentWillMount() {
-        const searchCommand = new DoSearch(this.props.searchQuery)
+    constructor(props) {
+        super()
 
-        this.setState({
+        const searchCommand = new DoSearch(props.searchQuery)
+
+        this.state = {
             searchCommand: searchCommand,
             loading: true
-        })
+        }
     }
 
     componentDidMount() {

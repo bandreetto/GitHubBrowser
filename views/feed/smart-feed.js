@@ -6,16 +6,18 @@ import FetchFeed from '../../domain/fetch-feed.use-case.js'
 import Details from "./feed-details"
 
 export default class SmartFeed extends Component {
-    componentWillMount() {
+    constructor() {
+        super()
+
         const fetchCommand = new FetchFeed(1)
 
         this.page = 1
         this.fetchFeed = fetchCommand
 
-        this.setState({
+        this.state = {
             loading: true,
             dataSource: []
-        })
+        }
     }
 
 
