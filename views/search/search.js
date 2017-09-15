@@ -11,11 +11,11 @@ export default class Search extends Component {
                 <Image style={styles.logo}
                        source={require('../../img/Octocat.png')}/>
                 <TextInput
-                    onChangeText={text => this.props.setQueryInput(text)}
+                    onChangeText={this.props.setQueryInput}
                     placeholder="What are you looking for?"
                     style={styles.searchInput}/>
                 <TouchableHighlight
-                    onPress={() => this.props.searchEvent()}
+                    onPress={this.props.searchEvent}
                     style={styles.searchButton}>
                     <Text style={styles.buttonText}>Search</Text>
                 </TouchableHighlight>

@@ -5,13 +5,15 @@ import Login from './login.js'
 import LoginAuth from '../../domain/login.use-case.js'
 
 export default class SmartLogin extends Component {
-    componentWillMount() {
-        this.setState({
+    constructor() {
+        super()
+
+        this.state = {
             fetching: false
-        })
+        }
     }
 
-    async loginHandler() {
+    loginHandler = async () => {
         console.log('Attempting to log in with username ' + this.state.username)
         this.setState({fetching: true})
 
@@ -44,39 +46,23 @@ export default class SmartLogin extends Component {
         }
     }
 
-    setUsername(username) {
+    setUsername = (username) => {
         this.setState({username: username})
     }
 
-    setPassword(password) {
+    setPassword = (password) => {
         this.setState({password: password})
-    }
-
-    showProgress() {
-        return this.state.fetching
-    }
-
-    successfulLogin() {
-        return this.state.success
-    }
-
-    badCredentialsError() {
-        return this.state.badCredentials
-    }
-
-    unknownError() {
-        return this.state.unknownError
     }
 
     render() {
         return (
             <Login
-                onLoginPressed={this.loginHandler.bind(this)}
-                showProgress={this.loading.bind(this)}
-                setUsername={this.setUsername.bind(this)}
-                setPassword={this.setPassword.bind(this)}
-                badCredentials={this.badCredentialsError.bind(this)}
-                unknownError={this.unknownError.bind(this)}
-                successfulLogin={this.successfulLogin.bind(this)}/>)
+                onLoginPressed={this.loginHandler}
+                showProgress={this.state.fetching}
+                setUsername={this.setUsername}
+                setPassword={this.setPassword}
+                badCredentials={this.state.badCredentials}
+                unknownError={this.state.unknownError}
+                successfulLogin={this.state.success}/>)
     }
 }

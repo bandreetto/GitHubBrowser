@@ -5,7 +5,7 @@ import {FlatList, Image, StyleSheet, Text, View} from 'react-native'
 import moment from "moment"
 
 export default class Details extends Component {
-    renderItem(rowData) {
+    renderItem = (rowData) => {
         return (
             <View
                 style={styles.commits}>
@@ -21,7 +21,7 @@ export default class Details extends Component {
         )
     }
 
-    renderSeparator() {
+    renderSeparator = () => {
         return (
             <View
                 style={styles.separator}/>
@@ -66,9 +66,9 @@ export default class Details extends Component {
 
                 <FlatList
                     data={this.props.pushEvent.payload.commits}
-                    renderItem={this.renderItem.bind(this)}
+                    renderItem={this.renderItem}
                     keyExtractor={item => item.sha}
-                    ItemSeparatorComponent={this.renderSeparator.bind(this)}
+                    ItemSeparatorComponent={this.renderSeparator}
                     automaticallyAdjustContentInsets={false}
                 />
             </View>
@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 80,
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 45
     },
     avatar: {
         height: 120,

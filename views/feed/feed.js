@@ -1,14 +1,18 @@
-'use strict';
+'use strict'
 
 import React, {Component} from 'react'
 import {ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableHighlight, View} from 'react-native'
 import moment from 'moment'
 
 export default class Feed extends Component {
-    renderRow(rowData) {
+    renderRow = (rowData) => {
+        const pressHandler = () => {
+            return this.props.rowPressEvent(rowData)
+        }
+
         return (
             <TouchableHighlight
-                onPress={() => this.props.rowPressEvent(rowData.item)}
+                onPress={pressHandler}
                 underlayColor='#ddd'>
                 <View style={styles.row}>
                     <Image
@@ -34,15 +38,15 @@ export default class Feed extends Component {
         )
     }
 
-    renderSeparator() {
+    renderSeparator = () => {
         return (
             <View
                 style={styles.separator}/>
         )
     }
 
-    renderFooter() {
-        if (this.props.hideFooter()) {
+    renderFooter = () => {
+        if (this.props.hideFooter) {
             return <View/>
         }
 
@@ -56,7 +60,7 @@ export default class Feed extends Component {
     }
 
     render() {
-        if (this.props.isLoading()) {
+        if (this.props.isLoading) {
             return (
                 <View style={styles.loader}>
                     <ActivityIndicator
@@ -69,12 +73,12 @@ export default class Feed extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={this.props.dataSource()}
-                    renderItem={this.renderRow.bind(this)}
+                    data={this.props.dataSource}
+                    renderItem={this.renderRow}
                     keyExtractor={item => item.id}
-                    ItemSeparatorComponent={this.renderSeparator.bind(this)}
-                    ListFooterComponent={this.renderFooter.bind(this)}
-                    onEndReached={this.props.endReachedEvent()}
+                    ItemSeparatorComponent={this.renderSeparator}
+                    ListFooterComponent={this.renderFooter()}
+                    onEndReached={this.props.endReachedEvent}
                     onEndReachedThreshold={0}
                 />
             </View>

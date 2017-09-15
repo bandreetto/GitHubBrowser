@@ -7,13 +7,13 @@ export default class Login extends Component {
     render() {
         let errorCtrl = <View/>
 
-        if (!this.props.successfulLogin() && this.props.badCredentials()) {
+        if (!this.props.successfulLogin && this.props.badCredentials) {
             errorCtrl = (<Text style={styles.error}>
                 Username or password incorrect
             </Text>)
         }
 
-        if (!this.props.successfulLogin() && this.props.unknownError()) {
+        if (!this.props.successfulLogin && this.props.unknownError) {
             errorCtrl = (<Text style={styles.error}>
                 An unexpected error occoured trying to log you in
             </Text>)
@@ -27,13 +27,11 @@ export default class Login extends Component {
                     GitHub Browser
                 </Text>
                 <TextInput
-                    onChangeText={text => {
-                        this.props.setUsername(text)
-                    }}
+                    onChangeText={this.props.setUsername}
                     style={styles.input}
                     placeholder="GitHub Username"/>
                 <TextInput style={styles.input}
-                           onChangeText={text => this.props.setPassword(text)}
+                           onChangeText={this.props.setPassword}
                            placeholder="GitHub Password"
                            secureTextEntry={true}/>
                 <TouchableHighlight
@@ -47,7 +45,7 @@ export default class Login extends Component {
 
                 {errorCtrl}
                 <ActivityIndicator
-                    animating={this.props.loading()}
+                    animating={this.props.showProgress}
                     size="large"
                     style={styles.loader}/>
             </View>

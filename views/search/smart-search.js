@@ -13,11 +13,11 @@ export default class SmartSearch extends Component {
     }
 
 
-    setQueryInput(text) {
+    setQueryInput = (text) => {
         this.setState({queryInput: text})
     }
 
-    searchHandler() {
+    searchHandler = () => {
         console.log('Attempting to search for: ' + this.state.queryInput)
 
         this.props.navigator.push({
@@ -31,7 +31,7 @@ export default class SmartSearch extends Component {
 
     render() {
         return <Search
-            setQueryInput={this.setQueryInput.bind(this)}
-            searchEvent={this.searchHandler.bind(this)}/>
+            setQueryInput={this.setQueryInput}
+            searchEvent={this.searchHandler}/>
     }
 }

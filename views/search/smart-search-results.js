@@ -45,19 +45,7 @@ export default class SmartSearchResults extends Component {
         })
     }
 
-    hasRepository(r1, r2) {
-        return r1.id === r2.id
-    }
-
-    isLoading() {
-        return this.state.loading
-    }
-
-    isFetchDepleted() {
-        return this.fetchDepleted
-    }
-
-    endReachedHandler() {
+    endReachedHandler = () => {
         if (this.fetchingData) {
             return
         }
@@ -79,10 +67,10 @@ export default class SmartSearchResults extends Component {
     render() {
         return (
             <SearchResults
-                isLoading={this.isLoading.bind(this)}
+                isLoading={this.state.loading}
                 repositories={this.state.repositories}
-                endReachedEvent={this.endReachedHandler.bind(this)}
-                hideFooter={this.isFetchDepleted.bind(this)}
+                endReachedEvent={this.endReachedHandler}
+                hideFooter={this.fetchingDepleted}
             />
         )
     }

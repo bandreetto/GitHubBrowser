@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import {ActivityIndicator, FlatList, Image, StyleSheet, Text, View} from "react-native"
 
 export default class SearchResults extends Component {
-    renderItem(rowData) {
+    renderItem = (rowData) => {
         return (
             <View style={styles.row}>
                 <Text style={styles.rowText}>
@@ -43,15 +43,15 @@ export default class SearchResults extends Component {
         )
     }
 
-    renderSeparator() {
+    renderSeparator = () => {
         return (
             <View
                 style={styles.separator}/>
         )
     }
 
-    renderFooter() {
-        if (this.props.hideFooter()) {
+    renderFooter = () => {
+        if (this.props.hideFooter) {
             return <View/>
         }
 
@@ -65,7 +65,7 @@ export default class SearchResults extends Component {
     }
 
     render() {
-        if (this.props.isLoading()) {
+        if (this.props.isLoading) {
             return (
                 <View style={styles.loader}>
                     <ActivityIndicator
@@ -80,10 +80,10 @@ export default class SearchResults extends Component {
                 <FlatList
                     data={this.props.repositories}
                     keyExtractor={item => item.full_name}
-                    renderItem={this.renderItem.bind(this)}
-                    ItemSeparatorComponent={this.renderSeparator.bind(this)}
-                    ListFooterComponent={this.renderFooter.bind(this)}
-                    onEndReached={this.props.endReachedEvent()}
+                    renderItem={this.renderItem}
+                    ItemSeparatorComponent={this.renderSeparator}
+                    ListFooterComponent={this.renderFooter()}
+                    onEndReached={this.props.endReachedEvent}
                     onEndReachedThreshold={1}
                 />
             </View>

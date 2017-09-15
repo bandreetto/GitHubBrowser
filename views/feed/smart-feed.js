@@ -39,25 +39,17 @@ export default class SmartFeed extends Component {
         })
     }
 
-    listDataSource() {
-        return this.state.dataSource
-    }
-
-    isLoading() {
-        return this.state.loading
-    }
-
-    rowPressHandler(rowData) {
+    rowPressHandler = (rowData) => {
         this.props.navigator.push({
             title: 'Push Event',
             component: Details,
             passProps: {
-                pushEvent: rowData
+                pushEvent: rowData.item
             }
         })
     }
 
-    endReachedHandler() {
+    endReachedHandler = () => {
         this.page++
         this.fetchFeed = new FetchFeed(this.page)
 
@@ -72,18 +64,14 @@ export default class SmartFeed extends Component {
             })
     }
 
-    isFetchDepleted() {
-        return this.fetchDepleted
-    }
-
     render() {
         return (
             <Feed
-                dataSource={this.listDataSource.bind(this)}
-                isLoading={this.isLoading.bind(this)}
-                rowPressEvent={this.rowPressHandler.bind(this)}
-                endReachedEvent={this.endReachedHandler.bind(this)}
-                hideFooter={this.isFetchDepleted.bind(this)}
+                dataSource={this.state.dataSource}
+                isLoading={this.state.loading}
+                rowPressEvent={this.rowPressHandler}
+                endReachedEvent={this.endReachedHandler}
+                hideFooter={this.fetchDepleted}
             />)
     }
 }
