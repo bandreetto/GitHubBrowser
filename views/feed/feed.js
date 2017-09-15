@@ -42,6 +42,10 @@ export default class Feed extends Component {
     }
 
     renderFooter() {
+        if (this.props.hideFooter()) {
+            return <View/>
+        }
+
         return (
             <View style={styles.bottomLoader}>
                 <ActivityIndicator

@@ -16,7 +16,7 @@ export default class SmartFeed extends Component {
 
         this.state = {
             loading: true,
-            dataSource: []
+            dataSource: [],
         }
     }
 
@@ -30,6 +30,7 @@ export default class SmartFeed extends Component {
     async bindFeed() {
         let feedItems = await this.fetchFeed.execute()
 
+        this.fetchDepleted = false
         feedItems = feedItems.filter(evnt => evnt.type === 'PushEvent')
         console.log(feedItems)
 
@@ -64,7 +65,15 @@ export default class SmartFeed extends Component {
             .catch(err => {
                 err.then(result => console.log(result.message))
                 this.page--
+                if (this.fetchDepleted === false) {
+                    this.fetchDepleted = true
+                    this.forceUpdate()
+                }
             })
+    }
+
+    isFetchDepleted() {
+        return this.fetchDepleted
     }
 
     render() {
@@ -73,6 +82,8 @@ export default class SmartFeed extends Component {
                 dataSource={this.listDataSource.bind(this)}
                 isLoading={this.isLoading.bind(this)}
                 rowPressEvent={this.rowPressHandler.bind(this)}
-                endReachedEvent={this.endReachedHandler.bind(this)}/>)
+                endReachedEvent={this.endReachedHandler.bind(this)}
+                hideFooter={this.isFetchDepleted.bind(this)}
+            />)
     }
 }
