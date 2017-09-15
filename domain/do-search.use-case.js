@@ -1,19 +1,32 @@
 'use strict'
 
-import Toolbox from '../toolbox'
-
 export default class DoSearch {
-    constructor(searchQuery) {
-        this.state = {
-            searchQuery: searchQuery
-        }
+    constructor(page, searchQuery) {
+        this.page = page
+        this.searchQuery = searchQuery
     }
 
     execute() {
         const url = 'https://api.github.com/search/repositories?q=' +
-            encodeURIComponent(this.state.searchQuery)
+            encodeURIComponent(this.searchQuery) +
+            '&page=' + this.page
 
         return fetch(url)
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response
+                }
+
+                throw response.json()
+            })
+            .then(response => {
+                console.log(response)
+                const a = response.json()
+                    .then(r => {
+                        console.log(r)
+                        return r
+                    })
+                return a
+            })
     }
 }

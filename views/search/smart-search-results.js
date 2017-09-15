@@ -3,53 +3,87 @@
 import React, {Component} from 'react'
 import SearchResults from "./search-results"
 import DoSearch from "../../domain/do-search.use-case"
+import * as _ from "lodash"
 
 export default class SmartSearchResults extends Component {
     constructor(props) {
         super()
 
-        const searchCommand = new DoSearch(props.searchQuery)
+        this.page = 1
+        this.searchQuery = props.searchQuery
+
+        this.searchCommand = new DoSearch(this.page, this.searchQuery)
+        this.fetchDepleted = false
+
+        this.fetchingData = false
 
         this.state = {
-            searchCommand: searchCommand,
+            repositories: [],
             loading: true
         }
     }
 
     componentDidMount() {
-        this.doSearch()
+        this.bindResults()
+            .catch(err => console.warn(err))
+            .finally(() => this.setState({loading: false}))
     }
 
-    doSearch() {
-        this.state.searchCommand.execute()
-            .then(results => {
-                console.log(results)
-
-                this.setState({
-                    repositories: results.items
-                })
-            })
-            .finally(() => {
-                this.setState({
-                    loading: false
-                })
-            })
+    componentDidUpdate() {
+        this.fetchingData = false
     }
 
-    getRepositories() {
-        return this.state.repositories
+    async bindResults() {
+        this.fetchingData = true
+        let repositories = await this.searchCommand.execute()
+
+        repositories = _.uniqBy([...this.state.repositories, ...repositories.items], 'id')
+
+        this.fetchDepleted = false
+        this.setState({
+            repositories: repositories
+        })
+    }
+
+    hasRepository(r1, r2) {
+        return r1.id === r2.id
     }
 
     isLoading() {
         return this.state.loading
     }
 
+    isFetchDepleted() {
+        return this.fetchDepleted
+    }
+
+    endReachedHandler() {
+        if (this.fetchingData) {
+            return
+        }
+
+        this.page++
+        this.searchCommand = new DoSearch(this.page, this.searchQuery)
+
+        this.bindResults()
+            .catch(err => {
+                err.then(result => console.log(result.message))
+                this.page--
+                if (this.fetchDepleted === false) {
+                    this.fetchDepleted = true
+                    this.forceUpdate()
+                }
+            })
+    }
+
     render() {
         return (
             <SearchResults
                 isLoading={this.isLoading.bind(this)}
-                repositories={this.getRepositories.bind(this)}/>
+                repositories={this.state.repositories}
+                endReachedEvent={this.endReachedHandler.bind(this)}
+                hideFooter={this.isFetchDepleted.bind(this)}
+            />
         )
     }
-
 }

@@ -50,6 +50,20 @@ export default class SearchResults extends Component {
         )
     }
 
+    renderFooter() {
+        if (this.props.hideFooter()) {
+            return <View/>
+        }
+
+        return (
+            <View style={styles.bottomLoader}>
+                <ActivityIndicator
+                    size='large'
+                    animating={true}/>
+            </View>
+        )
+    }
+
     render() {
         if (this.props.isLoading()) {
             return (
@@ -64,10 +78,13 @@ export default class SearchResults extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={this.props.repositories()}
-                    keyExtractor={item => item.id}
+                    data={this.props.repositories}
+                    keyExtractor={item => item.full_name}
                     renderItem={this.renderItem.bind(this)}
                     ItemSeparatorComponent={this.renderSeparator.bind(this)}
+                    ListFooterComponent={this.renderFooter.bind(this)}
+                    onEndReached={this.props.endReachedEvent()}
+                    onEndReachedThreshold={1}
                 />
             </View>
         )
@@ -115,5 +132,8 @@ const styles = StyleSheet.create({
     },
     repoCellLabel: {
         textAlign: 'center'
+    },
+    bottomLoader: {
+        paddingVertical: 20
     }
 })
