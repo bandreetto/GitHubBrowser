@@ -47,7 +47,7 @@ export default class Login extends Component {
 
                 {errorCtrl}
                 <ActivityIndicator
-                    animating={this.props.showProgress()}
+                    animating={this.props.loading()}
                     size="large"
                     style={styles.loader}/>
             </View>

@@ -72,7 +72,7 @@ export default class SmartLogin extends Component {
         return (
             <Login
                 onLoginPressed={this.loginHandler.bind(this)}
-                showProgress={this.showProgress.bind(this)}
+                showProgress={this.loading.bind(this)}
                 setUsername={this.setUsername.bind(this)}
                 setPassword={this.setPassword.bind(this)}
                 badCredentials={this.badCredentialsError.bind(this)}

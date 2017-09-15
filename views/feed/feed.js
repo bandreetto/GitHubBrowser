@@ -41,6 +41,16 @@ export default class Feed extends Component {
         )
     }
 
+    renderFooter() {
+        return (
+            <View style={styles.bottomLoader}>
+                <ActivityIndicator
+                    size='large'
+                    animating={true}/>
+            </View>
+        )
+    }
+
     render() {
         if (this.props.isLoading()) {
             return (
@@ -58,7 +68,10 @@ export default class Feed extends Component {
                     data={this.props.dataSource()}
                     renderItem={this.renderRow.bind(this)}
                     keyExtractor={item => item.id}
-                    ItemSeparatorComponent={this.renderSeparator.bind(this)}/>
+                    ItemSeparatorComponent={this.renderSeparator.bind(this)}
+                    ListFooterComponent={this.renderFooter.bind(this)}
+                    onEndReached={this.props.endReachedEvent()}
+                />
             </View>
         )
     }
@@ -100,4 +113,7 @@ const styles = StyleSheet.create({
         height: 1,
         backgroundColor: "#d7d7d7"
     },
+    bottomLoader: {
+        paddingVertical: 20
+    }
 })

@@ -7,29 +7,32 @@ import Details from "./feed-details"
 
 export default class SmartFeed extends Component {
     componentWillMount() {
-        const fetchCommand = new FetchFeed()
+        const fetchCommand = new FetchFeed(1)
+
+        this.page = 1
+        this.fetchFeed = fetchCommand
 
         this.setState({
-            fetchFeed: fetchCommand,
-            showProgress: true
+            loading: true,
+            dataSource: []
         })
     }
+
 
     componentDidMount() {
         this.bindFeed()
             .catch(err => console.warn(err))
+            .finally(() => this.setState({loading: false}))
     }
 
     async bindFeed() {
-        let feedItems = await this.state.fetchFeed.execute()
+        let feedItems = await this.fetchFeed.execute()
 
         feedItems = feedItems.filter(evnt => evnt.type === 'PushEvent')
-
         console.log(feedItems)
 
         this.setState({
-            dataSource: feedItems,
-            showProgress: false
+            dataSource: [...this.state.dataSource, ...feedItems],
         })
     }
 
@@ -38,7 +41,7 @@ export default class SmartFeed extends Component {
     }
 
     isLoading() {
-        return this.state.showProgress
+        return this.state.loading
     }
 
     rowPressHandler(rowData) {
@@ -51,11 +54,23 @@ export default class SmartFeed extends Component {
         })
     }
 
+    endReachedHandler() {
+        this.page++
+        this.fetchFeed = new FetchFeed(this.page)
+
+        this.bindFeed()
+            .catch(err => {
+                err.then(result => console.log(result.message))
+                this.page--
+            })
+    }
+
     render() {
         return (
             <Feed
                 dataSource={this.listDataSource.bind(this)}
                 isLoading={this.isLoading.bind(this)}
-                rowPressEvent={this.rowPressHandler.bind(this)}/>)
+                rowPressEvent={this.rowPressHandler.bind(this)}
+                endReachedEvent={this.endReachedHandler.bind(this)}/>)
     }
 }
