@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import Feed from './feed'
 import FetchFeed from '../../domain/fetch-feed.use-case.js'
 import Details from "./feed-details"
+import * as _ from "lodash"
 
 export default class SmartFeed extends Component {
     constructor() {
@@ -17,6 +18,7 @@ export default class SmartFeed extends Component {
         this.state = {
             loading: true,
             dataSource: [],
+            refreshing: false
         }
     }
 
@@ -24,7 +26,10 @@ export default class SmartFeed extends Component {
     componentDidMount() {
         this.bindFeed()
             .catch(err => console.warn(err))
-            .finally(() => this.setState({loading: false}))
+            .finally(() => this.setState({
+                loading: false,
+                refreshing: false
+            }))
     }
 
     async bindFeed() {
@@ -34,8 +39,10 @@ export default class SmartFeed extends Component {
         feedItems = feedItems.filter(evnt => evnt.type === 'PushEvent')
         console.log(feedItems)
 
+        feedItems = _.uniqBy([...this.state.dataSource, ...feedItems], 'id')
+
         this.setState({
-            dataSource: [...this.state.dataSource, ...feedItems],
+            dataSource: feedItems,
         })
     }
 
@@ -64,6 +71,20 @@ export default class SmartFeed extends Component {
             })
     }
 
+    refreshHandler = () => {
+        this.page = 0
+        this.fetchFeed = new FetchFeed(this.page)
+
+        this.setState({refreshing: true})
+
+        this.bindFeed()
+            .catch(err => console.warn(err))
+            .finally(() => this.setState({
+                refreshing: false,
+                fetchDepleted: true
+            }))
+    }
+
     render() {
         return (
             <Feed
@@ -72,6 +93,8 @@ export default class SmartFeed extends Component {
                 rowPressEvent={this.rowPressHandler}
                 endReachedEvent={this.endReachedHandler}
                 hideFooter={this.fetchDepleted}
+                isRefreshing={this.state.refreshing}
+                refreshEvent={this.refreshHandler}
             />)
     }
 }

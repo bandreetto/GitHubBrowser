@@ -80,6 +80,8 @@ export default class Feed extends Component {
                     ListFooterComponent={this.renderFooter()}
                     onEndReached={this.props.endReachedEvent}
                     onEndReachedThreshold={0}
+                    refreshing={this.props.isRefreshing}
+                    onRefresh={this.props.refreshEvent}
                 />
             </View>
         )
